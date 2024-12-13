@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="BJISXo" name="tm_utility" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="Tonemade Labs"
+              version="0.2.0">
   <MAINGROUP id="FbKSpB" name="tm_utility">
     <GROUP id="{E83EAFC3-0B63-7F44-FE53-81D14717193B}" name="Source">
       <FILE id="Debozo" name="PluginProcessor.cpp" compile="1" resource="0"

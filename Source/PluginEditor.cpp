@@ -16,7 +16,7 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     addAndMakeVisible (gainSlider);
-    gainSlider.setRange(0, 12);
+    gainSlider.setRange(-100, 12);
     gainSlider.setSliderStyle(juce::Slider::LinearVertical);
     
     juce::Value valueToControl = audioProcessor.apvts.getParameterAsValue("gain");
