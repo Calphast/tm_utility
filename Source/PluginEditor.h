@@ -30,6 +30,7 @@ private:
     Tm_gainAudioProcessor& audioProcessor;
     
     juce::Slider gainSlider;
+    juce::ToggleButton monoToggle;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Tm_gainAudioProcessorEditor)
 };

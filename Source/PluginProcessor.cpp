@@ -21,7 +21,7 @@ Tm_gainAudioProcessor::Tm_gainAudioProcessor()
                      #endif
                        ),
 #endif
-        apvts(*this, nullptr, "PARAMETERS", {std::make_unique<juce::AudioParameterFloat> (juce::ParameterID("gain", 1), "Gain", juce::NormalisableRange<float> (-100.0f, 12.0f), 0)})
+        apvts(*this, nullptr, "PARAMETERS", {std::make_unique<juce::AudioParameterFloat> (juce::ParameterID("gain", 1), "Gain", juce::NormalisableRange<float> (0.0f, 2.0f), 1)})
 {
 //    addParameter (gain = new juce::AudioParameterFloat (juce::ParameterID("gain", 1),                // parameter ID
 //                                                        "Gain",                                      // parameter name
@@ -102,7 +102,6 @@ void Tm_gainAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    previousGain = *apvts.getRawParameterValue("gain");
 }
 
 void Tm_gainAudioProcessor::releaseResources()
@@ -143,8 +142,6 @@ void Tm_gainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
     
-    float currentGain = *apvts.getRawParameterValue("gain");
-
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
@@ -165,7 +162,7 @@ void Tm_gainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
         auto* channelData = buffer.getWritePointer (channel);
 
         // ..do something to the data...
-        buffer.applyGain(previousGain + currentGain);
+        buffer.applyGain(*apvts.getRawParameterValue("gain"));
     }
 }
 

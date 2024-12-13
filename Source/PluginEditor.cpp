@@ -15,12 +15,16 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
+    addAndMakeVisible(monoToggle);
     addAndMakeVisible (gainSlider);
-    gainSlider.setRange(-100, 12);
-    gainSlider.setSliderStyle(juce::Slider::LinearVertical);
     
+    gainSlider.setRange(0, 2, .01);
+    gainSlider.setSliderStyle(juce::Slider::LinearVertical);
     juce::Value valueToControl = audioProcessor.apvts.getParameterAsValue("gain");
     gainSlider.getValueObject().referTo(valueToControl);
+    
+    monoToggle.setName("Mono");
+    monoToggle.setTitle("Mono");
     
     setSize (200, 300);
 }
@@ -40,5 +44,7 @@ void Tm_gainAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    gainSlider.setBounds(30, 30, 140, 240);
+    gainSlider.setBounds(30, 30, 70, 240);
+
+    monoToggle.setBounds(100, 35, 30, 30);
 }
