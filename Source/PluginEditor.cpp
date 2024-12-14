@@ -19,7 +19,7 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     addAndMakeVisible (gainSlider);
     
     gainSlider.setRange(0, 2, .01);
-    gainSlider.setSliderStyle(juce::Slider::LinearVertical);
+    gainSlider.setSliderStyle(juce::Slider::LinearBarVertical);
     juce::Value valueToControl = audioProcessor.apvts.getParameterAsValue("gain");
     gainSlider.getValueObject().referTo(valueToControl);
     
@@ -37,7 +37,10 @@ Tm_gainAudioProcessorEditor::~Tm_gainAudioProcessorEditor()
 void Tm_gainAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (juce::Colour (191,191,191));
+    
+    gainSlider.setColour(juce::Slider::trackColourId, juce::Colour(16,64,59));
+    gainSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(16,64,59));
 }
 
 void Tm_gainAudioProcessorEditor::resized()
@@ -46,5 +49,6 @@ void Tm_gainAudioProcessorEditor::resized()
     // subcomponents in your editor..
     gainSlider.setBounds(30, 30, 70, 240);
 
-    monoToggle.setBounds(100, 35, 30, 30);
+    // No Idea where this will go
+    monoToggle.setBounds(110, 30, 30, 30);
 }
