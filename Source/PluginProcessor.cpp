@@ -21,7 +21,7 @@ Tm_gainAudioProcessor::Tm_gainAudioProcessor()
                      #endif
                        ),
 #endif
-apvts(*this, nullptr, "PARAMETERS", {std::make_unique<juce::AudioParameterFloat> (juce::ParameterID("gain", 1), "Gain", juce::NormalisableRange<float> (0.0f, 2.0f), 1)})
+apvts(*this, nullptr, "PARAMETERS", {std::make_unique<juce::AudioParameterFloat> (juce::ParameterID("gain", 1), "Gain", juce::NormalisableRange<float> (0.0f, 2.0f), 1), std::make_unique<juce::AudioParameterBool>(juce::ParameterID("monotoggle", 1), "Mono Toggle", false)})
 {
 }
 
@@ -158,9 +158,13 @@ void Tm_gainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
         
         // ..do something to the data...
         // Stereo -> Mono Conversion
-        buffer.addFrom(0, 0, buffer, 1, 0, buffer.getNumSamples());
-        buffer.copyFrom(1, 0, buffer, 0, 0, buffer.getNumSamples());
-        
+        if (*apvts.getRawParameterValue("monotoggle") == true) {
+            buffer.addFrom(0, 0, buffer, 1, 0, buffer.getNumSamples());
+            buffer.copyFrom(1, 0, buffer, 0, 0, buffer.getNumSamples());
+            
+            // gain tweak to avoid the peak in gain cause by adding both samples
+            buffer.applyGain(.6);
+        }
 
         // Gain Adjustments (TO be Improved)
         buffer.applyGain(*apvts.getRawParameterValue("gain"));

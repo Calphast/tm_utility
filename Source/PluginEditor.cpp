@@ -18,16 +18,25 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     addAndMakeVisible(monoToggle);
     addAndMakeVisible (gainSlider);
     
+    // slider styling
     gainSlider.setRange(0, 2, .01);
     gainSlider.setSliderStyle(juce::Slider::LinearBarVertical);
-    juce::Value valueToControl = audioProcessor.apvts.getParameterAsValue("gain");
-    gainSlider.getValueObject().referTo(valueToControl);
     gainSlider.setTextBoxIsEditable(false);
     gainSlider.setDoubleClickReturnValue(true, 1.0);
     
+    // button styling
     monoToggle.setName("Mono");
-    monoToggle.setTitle("Mono");
+    monoToggle.setSize(15, 15);
+    monoToggle.setButtonText("Mono");
     
+    // attaching slider to parameter
+    juce::Value valueToControl = audioProcessor.apvts.getParameterAsValue("gain");
+    gainSlider.getValueObject().referTo(valueToControl);
+    
+    // attaching button to parameter
+    juce::Value monoValueToControl = audioProcessor.apvts.getParameterAsValue("monotoggle");
+    monoToggle.getToggleStateValue().referTo(monoValueToControl);
+                                
     setSize (200, 300);
 }
 
@@ -41,8 +50,14 @@ void Tm_gainAudioProcessorEditor::paint (juce::Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colour (191,191,191));
     
+    g.drawText("Gain", 50, 3, 30, 30, juce::Justification::centred);
+    
     gainSlider.setColour(juce::Slider::trackColourId, juce::Colour(16,64,59));
     gainSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(16,64,59));
+    
+//    auto bounds = monoToggle.getBoundsInParent();
+//    g.drawFittedText("Mono", bounds, juce::Justification::centred, 1);
+    monoToggle.changeWidthToFitText();
 }
 
 void Tm_gainAudioProcessorEditor::resized()
@@ -52,5 +67,5 @@ void Tm_gainAudioProcessorEditor::resized()
     gainSlider.setBounds(30, 30, 70, 240);
 
     // No Idea where this will go
-    monoToggle.setBounds(110, 30, 30, 30);
+    monoToggle.setBounds(120, 25, 300, 30);
 }
