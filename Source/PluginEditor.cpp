@@ -22,6 +22,8 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     gainSlider.setSliderStyle(juce::Slider::LinearBarVertical);
     juce::Value valueToControl = audioProcessor.apvts.getParameterAsValue("gain");
     gainSlider.getValueObject().referTo(valueToControl);
+    gainSlider.setTextBoxIsEditable(false);
+    gainSlider.setDoubleClickReturnValue(true, 1.0);
     
     monoToggle.setName("Mono");
     monoToggle.setTitle("Mono");

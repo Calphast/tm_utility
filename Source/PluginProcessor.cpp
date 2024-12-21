@@ -21,14 +21,8 @@ Tm_gainAudioProcessor::Tm_gainAudioProcessor()
                      #endif
                        ),
 #endif
-        apvts(*this, nullptr, "PARAMETERS", {std::make_unique<juce::AudioParameterFloat> (juce::ParameterID("gain", 1), "Gain", juce::NormalisableRange<float> (0.0f, 2.0f), 1)})
+apvts(*this, nullptr, "PARAMETERS", {std::make_unique<juce::AudioParameterFloat> (juce::ParameterID("gain", 1), "Gain", juce::NormalisableRange<float> (0.0f, 2.0f), 1)})
 {
-//    addParameter (gain = new juce::AudioParameterFloat (juce::ParameterID("gain", 1),                // parameter ID
-//                                                        "Gain",                                      // parameter name
-//                                                        juce::NormalisableRange<float> (0.0f, 12.0f), // parameter range
-//                                                        0.0f));                                      // default value
-   
-    
 }
 
 Tm_gainAudioProcessor::~Tm_gainAudioProcessor()
@@ -139,6 +133,7 @@ bool Tm_gainAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) 
 void Tm_gainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
+    
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
     
@@ -160,8 +155,14 @@ void Tm_gainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-
+        
         // ..do something to the data...
+        // Stereo -> Mono Conversion
+        buffer.addFrom(0, 0, buffer, 1, 0, buffer.getNumSamples());
+        buffer.copyFrom(1, 0, buffer, 0, 0, buffer.getNumSamples());
+        
+
+        // Gain Adjustments (TO be Improved)
         buffer.applyGain(*apvts.getRawParameterValue("gain"));
     }
 }
