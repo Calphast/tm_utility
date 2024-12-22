@@ -18,7 +18,7 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     addAndMakeVisible(monoToggle);
     addAndMakeVisible (gainSlider);
     
-    // slider styling
+    // slider basic parameters
     gainSlider.setRange(0, 2, .01);
     gainSlider.setSliderStyle(juce::Slider::LinearBarVertical);
     gainSlider.setTextBoxIsEditable(false);
@@ -26,7 +26,7 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     gainSlider.setColour(juce::Slider::trackColourId, juce::Colour(18, 115, 105));
     gainSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(16,64,59));
     
-    // button styling
+    // button bassic parameters
     monoToggle.setName("Mono");
     monoToggle.setSize(15, 15);
     monoToggle.setButtonText("Mono");

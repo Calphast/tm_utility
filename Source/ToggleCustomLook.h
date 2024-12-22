@@ -21,9 +21,10 @@ public:
     void drawToggleButton(juce::Graphics& g, juce::ToggleButton& toggleButton)
     {
         auto bounds = toggleButton.getBoundsInParent().toFloat();
+        juce::Rectangle<float> rect(bounds);
         
         g.setColour(juce::Colour(18, 115, 105));
-        g.fillRoundedRectangle(bounds, 6.0f);
+        g.fillRect(rect);
     }
 private:
     
