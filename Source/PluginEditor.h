@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "ToggleCustomLook.h"
 
 //==============================================================================
 /**
@@ -31,6 +32,8 @@ private:
     
     juce::Slider gainSlider;
     juce::ToggleButton monoToggle;
+    
+    ToggleCustomLook toggleCustomLook;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Tm_gainAudioProcessorEditor)
 };

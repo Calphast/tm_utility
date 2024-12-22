@@ -23,11 +23,14 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     gainSlider.setSliderStyle(juce::Slider::LinearBarVertical);
     gainSlider.setTextBoxIsEditable(false);
     gainSlider.setDoubleClickReturnValue(true, 1.0);
+    gainSlider.setColour(juce::Slider::trackColourId, juce::Colour(18, 115, 105));
+    gainSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(16,64,59));
     
     // button styling
     monoToggle.setName("Mono");
     monoToggle.setSize(15, 15);
     monoToggle.setButtonText("Mono");
+    monoToggle.changeWidthToFitText();
     
     // attaching slider to parameter
     juce::Value valueToControl = audioProcessor.apvts.getParameterAsValue("gain");
@@ -49,15 +52,12 @@ void Tm_gainAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colour (191,191,191));
-    
     g.drawText("Gain", 50, 3, 30, 30, juce::Justification::centred);
     
-    gainSlider.setColour(juce::Slider::trackColourId, juce::Colour(16,64,59));
-    gainSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(16,64,59));
+    toggleCustomLook.drawToggleButton(g, monoToggle);
+    monoToggle.setLookAndFeel(&toggleCustomLook);
     
-//    auto bounds = monoToggle.getBoundsInParent();
-//    g.drawFittedText("Mono", bounds, juce::Justification::centred, 1);
-    monoToggle.changeWidthToFitText();
+    monoToggle.setLookAndFeel(nullptr);
 }
 
 void Tm_gainAudioProcessorEditor::resized()
@@ -67,5 +67,5 @@ void Tm_gainAudioProcessorEditor::resized()
     gainSlider.setBounds(30, 30, 70, 240);
 
     // No Idea where this will go
-    monoToggle.setBounds(120, 25, 300, 30);
+    monoToggle.setBounds(120, 30, 67, 27);
 }
