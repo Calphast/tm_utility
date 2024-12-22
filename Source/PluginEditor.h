@@ -31,7 +31,7 @@ private:
     Tm_gainAudioProcessor& audioProcessor;
     
     juce::Slider gainSlider;
-    juce::ToggleButton monoToggle;
+    juce::TextButton monoButton;
     
     ToggleCustomLook toggleCustomLook;
 

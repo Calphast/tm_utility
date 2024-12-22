@@ -15,8 +15,9 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    addAndMakeVisible(monoToggle);
+//    addAndMakeVisible(monoToggle);
     addAndMakeVisible (gainSlider);
+    addAndMakeVisible(monoButton);
     
     // slider basic parameters
     gainSlider.setRange(0, 2, .01);
@@ -27,10 +28,11 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     gainSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(16,64,59));
     
     // button bassic parameters
-    monoToggle.setName("Mono");
-    monoToggle.setSize(15, 15);
-    monoToggle.setButtonText("Mono");
-    monoToggle.changeWidthToFitText();
+    monoButton.setButtonText("Mono");
+    monoButton.setClickingTogglesState(true);
+    monoButton.setLookAndFeel(&toggleCustomLook);
+    monoButton.setOpaque(false);
+    monoButton.setAlpha(0.0f);
     
     // attaching slider to parameter
     juce::Value valueToControl = audioProcessor.apvts.getParameterAsValue("gain");
@@ -38,13 +40,14 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     
     // attaching button to parameter
     juce::Value monoValueToControl = audioProcessor.apvts.getParameterAsValue("monotoggle");
-    monoToggle.getToggleStateValue().referTo(monoValueToControl);
+    monoButton.getToggleStateValue().referTo(monoValueToControl);
                                 
     setSize (200, 300);
 }
 
 Tm_gainAudioProcessorEditor::~Tm_gainAudioProcessorEditor()
 {
+    monoButton.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -54,10 +57,11 @@ void Tm_gainAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll (juce::Colour (191,191,191));
     g.drawText("Gain", 50, 3, 30, 30, juce::Justification::centred);
     
-    toggleCustomLook.drawToggleButton(g, monoToggle);
-    monoToggle.setLookAndFeel(&toggleCustomLook);
-    
-    monoToggle.setLookAndFeel(nullptr);
+//    toggleCustomLook.drawToggleButton(g, monoToggle);
+//    monoToggle.setLookAndFeel(&toggleCustomLook);
+//    
+//    monoToggle.setLookAndFeel(nullptr);
+    toggleCustomLook.drawToggleButton(g, monoButton);
 }
 
 void Tm_gainAudioProcessorEditor::resized()
@@ -67,5 +71,5 @@ void Tm_gainAudioProcessorEditor::resized()
     gainSlider.setBounds(30, 30, 70, 240);
 
     // No Idea where this will go
-    monoToggle.setBounds(120, 30, 67, 27);
+    monoButton.setBounds(120, 30, 67, 27);
 }
