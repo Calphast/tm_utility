@@ -166,9 +166,8 @@ void Tm_gainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
             buffer.applyGain(.6);
         }
 
-        // Gain Adjustments (TO be Improved)
+        // Gain Adjustments
         buffer.applyGain(*apvts.getRawParameterValue("gain"));
-        
     }
 }
 

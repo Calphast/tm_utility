@@ -15,7 +15,6 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-//    addAndMakeVisible(monoToggle);
     addAndMakeVisible (gainSlider);
     addAndMakeVisible(monoButton);
     
@@ -42,7 +41,7 @@ Tm_gainAudioProcessorEditor::Tm_gainAudioProcessorEditor (Tm_gainAudioProcessor&
     juce::Value monoValueToControl = audioProcessor.apvts.getParameterAsValue("monotoggle");
     monoButton.getToggleStateValue().referTo(monoValueToControl);
                                 
-    setSize (200, 300);
+    setSize (130, 330);
 }
 
 Tm_gainAudioProcessorEditor::~Tm_gainAudioProcessorEditor()
@@ -55,12 +54,9 @@ void Tm_gainAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colour (191,191,191));
+    g.setFont(juce::Font(juce::FontOptions("Futura", 16.f, 0)));
     g.drawText("Gain", 50, 3, 30, 30, juce::Justification::centred);
-    
-//    toggleCustomLook.drawToggleButton(g, monoToggle);
-//    monoToggle.setLookAndFeel(&toggleCustomLook);
-//    
-//    monoToggle.setLookAndFeel(nullptr);
+ 
     toggleCustomLook.drawToggleButton(g, monoButton);
 }
 
@@ -71,5 +67,5 @@ void Tm_gainAudioProcessorEditor::resized()
     gainSlider.setBounds(30, 30, 70, 240);
 
     // No Idea where this will go
-    monoButton.setBounds(120, 30, 67, 27);
+    monoButton.setBounds(30, 285, 70, 30);
 }
